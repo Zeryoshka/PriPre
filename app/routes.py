@@ -16,7 +16,13 @@ def make_graph(data):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Заглушка, чтобы было проще понимать какие параметры требуются для рендера
+    parametrs = {
+        'tickets': ['YNDX', 'ALRS', 'SBER', 'MOEX'], # Наимаенования тикетов (списком строк)
+        'models': ['model 1', 'model 2', 'model 3'] # Наименования моделей (списком строк)
+    }
+    return render_template('index-template.html', **parametrs) # !Внимательнее там **parametrs
+    # return render_template('index.html')
 
 @app.route('/plot/past', methods=['GET', 'POST'])
 def plot_past_view(ticket):
