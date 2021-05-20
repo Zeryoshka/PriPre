@@ -1,15 +1,11 @@
-from flask.signals import request_started
 from app import app
 from flask import render_template, request
-import requests
-import apimoex
-import pandas as pd
 import matplotlib.pyplot as plt
 
 def parse_json(json):
     pass
 
-def get_data(params):
+def get_data():
     pass
 
 def receive_ML(X, Y):
