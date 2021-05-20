@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/main.css')}}">
+    <title>PriPre</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+<body class="main-container">
+
+    <header class="main-container__header header">
+        <h1 class="header__text">
+            PriPre
+        </h1>
+    </header>
+    <content class="main-container__content content">
+        <section class="content__form-block form-block">
+            <form class="form-blcok__form form">
+                <div class="form__form-ticket form-ticket">
+                    <label class="form-ticket__label">Ticket:</label>
+                    <select class="form-ticket__select" name="ticket">
+                        {% for ticket in tickets %}
+                            <option class="form-ticket__option" value="{{ticket}}" label="{{ticket}}">
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form__select-models select-models">
+                    <p class="select-models__label">Models</p>
+                    <fieldset class="select-models__models-list">
+                        {% for model in models %}
+                            <div class="select-models__line">
+                                <input class="select-models__checkbox" name="{{model}}" type="checkbox">
+                                <label class="select-models__label">{{model}}</label>
+                            </div>
+                        {% endfor %}                        
+                    </fieldset>
+                </div>
+	            <input class="form__submit" type="submit" value="Построить">
+            </form>
+        </section>
+        <section class="content__chart-container chart-container " >
+            <div class="chart-container__chart" id="chart"></div>
+        </section>
+    </content>
+    <script src="{{url_for('static', filename='main.js')}}"></script>
+</body>
+</html>
