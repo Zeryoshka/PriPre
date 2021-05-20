@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def parse_json(json):
     pass
 
-def get_data(params):
+def get_data():
     pass
 
 def receive_ML(X, Y):
