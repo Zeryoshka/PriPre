@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="style/main.css">
 
     <title>PriPre</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 </head>
 <body class="main-container">
 
@@ -52,11 +54,10 @@
 	            <input class="form__submit" type="submit" value="Построить">
             </form>
         </section>
-        <section class="content__chart-container chart-container">
-            <div class="chart-container__chart">
-                <div class="chart" id="chart"></div>
-            </div>
+        <section class="content__chart-container chart-container " >
+            <div class="chart-container__chart" id="chart"></div>
         </section>
     </content>
+    <script src="main.js"></script>
 </body>
 </html>
