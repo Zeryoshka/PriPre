@@ -30,4 +30,3 @@ def plot_past_view(ticket):
     X, Y = receive_ML(X, Y)
     plotly_graph = make_graph(X, Y)
     return plotly_graph
-    

@@ -2,3 +2,5 @@
 /.vscode
 /env
 app/data_parser/*.csv
+Dockerfile
+.dockerignore

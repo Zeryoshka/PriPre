@@ -1,7 +1,7 @@
 import requests
 import apimoex
 import pandas as pd
-# from config import START_DATE, SECURITY_LIST
+# from config import START_DATE, SECURITY_LIST, DATA_PATH
 
 def form_data() -> None:
     """
@@ -18,7 +18,7 @@ def form_data() -> None:
                 df['begin'].values)), df['close'], df['value']
             attr = {'date' : date, 'close_value' : close, 'values' : value}
             df = pd.DataFrame(attr)
-            df.to_csv(security + '.csv')
+            df.to_csv('app/data_parser' + security + '.csv')
 
 if __name__ == '__main__':
     form_data()
