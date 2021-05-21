@@ -1,6 +1,5 @@
 from app import app
 from flask import render_template, request
-import matplotlib.pyplot as plt
 
 def parse_json(json):
     pass
