@@ -1,19 +1,45 @@
 
-def const(x_old, y_old, x_pred):
-    return 1
+class Const:
+    pass
 
 # Dict of models
 # key: name of model
 # value: function, for predict results
 MODELS = {
-    'const': const
+    'const': Сonst
 }
 
-# List of models's names (generate automaticly from MODELS)
-MODELS_NAMES = list(MODELS.keys())
 
-def is_model_exist(name):
+class _Models:
     '''
-    Function for checking existing of model with name
+    Class for describing all models
     '''
-    return name in MODELS_NAMES
+    def __init__(self, MODELS):
+        self._models = MODELS # Dict of models
+        self.names = list(MODELS.keys()) # List of models's names (generate automaticly from MODELS)
+
+    def __getitem__(self, key):
+        '''
+        Get item magic-method
+        '''
+        if key in self.names:
+            return self._models[key]
+        return None
+
+    def load(self):
+        '''
+        Method for loading model's parametrs
+        '''
+        print('Loading is start')
+        for name, model in self.models.items():
+            model.load()
+            print(f'Loaded {name}')
+
+    def is_model_exist(self, name):
+        '''
+        Function for checking existing of model with name
+        '''
+        return name in self.names
+
+
+models = _Models(MODELS)
