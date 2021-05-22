@@ -7,27 +7,21 @@ import csv
 SECURITY_LIST = ['YNDX', 'ALRS', 'SBER', 'MOEX']
 CSV_PATH = 'data_parser'
 
-def parse_json(json):
-    pass
-
 def get_data(SECURITY_LIST, CSV_PATH):
     data = dict()
     for security in SECURITY_LIST:
         X = []
         Y = []
-        with open(CSV_PATH + security +'.csv', newline='') as csvfile:
+        with open(CSV_PATH + '/' + security +'.csv', newline='') as csvfile:
             content = csv.DictReader(csvfile)
             line_count = 0
-            for row in line_count:
+            for row in content:
                 if line_count:
                     X.append(row['date'])
                     Y.append(row['close_value'])
                 line_count += 1
         data[security] = (X, Y)
     return data
-
-def receive_ml(X, Y):
-    pass
 
 def make_graph(ticket_list):
     fig = go.Figure()
