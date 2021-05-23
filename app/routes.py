@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request
-from __init__ import models
+from app import models
 # from config import SECURITY_LIST
 import plotly.graph_objects as go
 import csv
@@ -45,7 +45,7 @@ def index():
     # Заглушка, чтобы было проще понимать какие параметры требуются для рендера
     parametrs = {
         'tickets': ['YNDX', 'ALRS', 'SBER', 'MOEX'], # Наимаенования тикетов (списком строк)
-        'models': models.names() # Наименования моделей (списком строк)
+        'models': models.names # Наименования моделей (списком строк)
     }
     return render_template('index-template.html', **parametrs) # !Внимательнее там **parametrs
 
