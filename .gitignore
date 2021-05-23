@@ -1,4 +1,4 @@
-*__pycache__
+__pycache__/
 /.vscode
 /env
 app/data_parser/loaded_data/*.csv
