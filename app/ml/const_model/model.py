@@ -1,5 +1,7 @@
 import json
 from random import randint
+from .config import FILE_DUMP
+from .config import FILE_LOAD
 
 class Const:
     '''
@@ -15,7 +17,7 @@ class Const:
         '''
         Function for loading weights/parametrs from file
         '''
-        with open('param.json', 'r') as f:
+        with open(FILE_LOAD, 'r') as f:
             self.weight = json.load(f)['weight']
 
     def predict(self, x_old, y_old, x_pred):
@@ -37,5 +39,5 @@ class Const:
         '''
         Method for save weight in file after fit
         '''
-        with open('param.json', 'w') as f:
+        with open(FILE_DUMP, 'w') as f:
             json.dump({'weight': self.weight}, f)
