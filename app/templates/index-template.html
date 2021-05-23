@@ -11,6 +11,12 @@
     <title>PriPre</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"
+    >
+    </script>
 </head>
 <body class="main-container">
 
@@ -21,10 +27,10 @@
     </header>
     <content class="main-container__content content">
         <section class="content__form-block form-block">
-            <form class="form-blcok__form form">
+            <form class="form-blcok__form form" id="form">
                 <div class="form__form-ticket form-ticket">
                     <label class="form-ticket__label">Ticket:</label>
-                    <select class="form-ticket__select" name="ticket">
+                    <select id="ticket-select" class="form-ticket__select" name="ticket">
                         {% for ticket in tickets %}
                             <option class="form-ticket__option" value="{{ticket}}" label="{{ticket}}">
                         {% endfor %}
@@ -42,7 +48,7 @@
                         {% endfor %}                        
                     </fieldset>
                 </div>
-	            <input class="form__submit" type="submit" value="Построить">
+	            <input class="form__submit" type="button" value="Построить">
             </form>
         </section>
         <section class="content__chart-container chart-container " >
