@@ -16,7 +16,7 @@ class Data_manager:
         param: DATA_PATH - str
         """
         self._path_to_data = DATA_PATH
-        self._ticket_list = list(map(lambda x: x.split()[0], os.listdir(DATA_PATH)))
+        self._ticket_list = list(map(lambda x: x.split('.')[0], os.listdir(DATA_PATH)))
 
     @property
     def ticket_list(self) -> list:
