@@ -18,7 +18,7 @@ def form_data() -> None:
                 df['begin'].values)), df['close'], df['value']
             attr = {'date' : date, 'close_value' : close, 'values' : value}
             df = pd.DataFrame(attr)
-            df.to_csv('app/data_parser' + security + '.csv')
+            df.to_csv('app/data_parser/loaded_data/' + security + '.csv')
 
 if __name__ == '__main__':
     form_data()

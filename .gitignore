@@ -1,6 +1,8 @@
 __pycache__/
 /.vscode
 /env
-app/data_parser/*.csv
+app/data_parser/loaded_data/*.csv
+app/data_parser/ml_data/*.csv
 Dockerfile
 .dockerignore
+test.py
