@@ -18,7 +18,8 @@ class Data_manager:
         self._path_to_data = DATA_PATH
         self._ticket_list = list(map(lambda x: x.split()[0], os.listdir(DATA_PATH)))
 
-    def get_tickets(self) -> list:
+    @property
+    def ticket_list(self) -> list:
         """
         Gets list of strings
         Example -> ['YNDX', 'ALRS', 'SBER', 'MOEX']
