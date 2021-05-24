@@ -22,9 +22,7 @@ def index():
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
-    print(params['models'])
-    print(params['ticket'])
-    X, Y = DataManager.give_data('YNDX')
+    X, Y = DataManager.give_data(params['ticket'])
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
