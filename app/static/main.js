@@ -15,14 +15,17 @@ function create_data_obj() {
 }
 
 $('.form__submit').click(function (){
+
     $.ajax({
         url: '/plot/past',
-        method: 'get',
+        method: 'POST',
+        data: JSON.stringify(create_data_obj()),
+        contentType: "application/json",
         dataType: 'json',
-        data: create_data_obj(),
         success: function(data) {
-            Plotly.plot('chart', data, {})
+            Plotly.newPlot('chart', data, {})
         }
     })
+
     return false
 });

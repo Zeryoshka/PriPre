@@ -7,23 +7,6 @@ from plotly.utils import PlotlyJSONEncoder
 import plotly.graph_objects as go
 
 import json
-import csv
-
-def make_graph(ticket_list):
-    fig = go.Figure()
-    for ticket_data in ticket_list:
-        fig.add_trace(ticket_data)
-    layout = go.update_layout(
-        title=go.layout.Title(text='PriPre ticket graph'),
-        yaxis_title='Close value',
-        xaxis_title='Date',
-        legend_title='Tickets',
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="Black"
-        )
-    )
 
 @app.route('/')
 def index():
@@ -39,10 +22,26 @@ def index():
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
-
-    # X, Y = get_data()
-    # X, Y = receive_ml(X, Y)
-    # plotly_graph = make_graph(X, Y)
-    # return plotly_graph
+    X, Y = DataManager.give_data(params['ticket'])
     fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=X,
+            x0=X[0],
+            y=Y,
+            y0=Y[0],
+            name='Real value'
+        )
+    )
+    fig.update_layout(
+        title=go.layout.Title(text='PriPre ticket graph'),
+        yaxis_title='Close value',
+        xaxis_title='Date',
+        legend_title='Tickets',
+        font=dict(
+            family="Courier New, monospace",
+            size=18,
+            color="Black"
+        )
+    )
     return json.dumps(fig, cls=PlotlyJSONEncoder), 200, {'Content-Type': 'application/json'}
