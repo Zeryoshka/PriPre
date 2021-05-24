@@ -1,0 +1,3 @@
+START_DATE = '2021-01-01'
+SECURITY_LIST = ['YNDX', 'ALRS', 'SBER', 'MOEX']
+DATA_PATH = 'app/loaded_data/'

@@ -1,29 +1,13 @@
 from app import app
+from app import models
+from app import DataManager
 from flask import render_template, request
-# from config import SECURITY_LIST
+
 from plotly.utils import PlotlyJSONEncoder
-import json
 import plotly.graph_objects as go
+
+import json
 import csv
-
-SECURITY_LIST = ['YNDX', 'ALRS', 'SBER', 'MOEX']
-CSV_PATH = 'data_parser'
-
-def get_data():
-    data = dict()
-    for security in SECURITY_LIST:
-        X = []
-        Y = []
-        with open(CSV_PATH + '/' + security +'.csv', newline='') as csvfile:
-            content = csv.DictReader(csvfile)
-            line_count = 0
-            for row in content:
-                if line_count:
-                    X.append(row['date'])
-                    Y.append(row['close_value'])
-                line_count += 1
-        data[security] = (X, Y)
-    return data
 
 def make_graph(ticket_list):
     fig = go.Figure()
@@ -45,11 +29,11 @@ def make_graph(ticket_list):
 def index():
     # Заглушка, чтобы было проще понимать какие параметры требуются для рендера
     parametrs = {
-        'tickets': ['YNDX', 'ALRS', 'SBER', 'MOEX'], # Наимаенования тикетов (списком строк)
-        'models': ['model 1', 'model 2', 'model 3'] # Наименования моделей (списком строк)
+        'tickets': DataManager.ticket_list, # Наимаенования тикетов (списком строк)
+        'models': models.names # Наименования моделей (списком строк)
     }
     return render_template('index-template.html', **parametrs) # !Внимательнее там **parametrs
-    # return render_template('index.html')
+
 
 @app.route('/plot/past', methods=['GET', 'POST'])
 def plot_past_view():
