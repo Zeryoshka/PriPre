@@ -21,7 +21,9 @@ def index():
 @app.route('/plot/past', methods=['GET', 'POST'])
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
-    # params = request.get_json(), needs fix
+    params = request.get_json()
+    print(params['models'])
+    print(params['ticket'])
     X, Y = DataManager.give_data('YNDX')
     fig = go.Figure()
     fig.add_trace(
