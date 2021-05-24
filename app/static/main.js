@@ -21,7 +21,7 @@ $('.form__submit').click(function (){
         dataType: 'json',
         data: create_data_obj(),
         success: function(data) {
-            Plotly.plot('chart', data.graph, {})
+            Plotly.plot('chart', data, {})
         }
     })
     return false
