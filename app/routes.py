@@ -18,7 +18,7 @@ def index():
     return render_template('index-template.html', **parametrs) # !Внимательнее там **parametrs
 
 
-@app.route('/plot/past', methods=['GET', 'POST'])
+@app.route('/plot/past', methods=['POST'])
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
@@ -44,7 +44,6 @@ def plot_past_view():
             family="Courier New, monospace",
             size=18,
             color="Black"
-        
         )
     )
     return json.dumps(fig, cls=PlotlyJSONEncoder), 200, {'Content-Type': 'application/json'}
