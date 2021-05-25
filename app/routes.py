@@ -22,7 +22,8 @@ def index():
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
-    X, Y = DataManager.give_data(params['ticket'])
+    ticket = params['ticket']
+    X, Y = DataManager.give_data(ticket)
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
@@ -34,14 +35,16 @@ def plot_past_view():
         )
     )
     fig.update_layout(
-        title=go.layout.Title(text='PriPre ticket graph'),
+        title=go.layout.Title(text=f'PriPre {ticket} ticket graph'),
         yaxis_title='Close value',
         xaxis_title='Date',
-        legend_title='Tickets',
+        showlegend=True,
+        legend_title_text='Tickets',
         font=dict(
             family="Courier New, monospace",
             size=18,
             color="Black"
+        
         )
     )
     return json.dumps(fig, cls=PlotlyJSONEncoder), 200, {'Content-Type': 'application/json'}
