@@ -1,7 +1,9 @@
+from genericpath import exists
 import requests
 import apimoex
 import pandas as pd
 from config import START_DATE, SECURITY_LIST, DATA_PATH
+import os
 
 def form_data() -> None:
     """
@@ -17,6 +19,8 @@ def form_data() -> None:
                 df['begin'].values)), df['close']
             attr = {'date' : date, 'close_value' : close}
             df = pd.DataFrame(attr)
+            if not os.path.exists(DATA_PATH):
+                os.mkdir(DATA_PATH)
             df.to_csv(DATA_PATH + security + '.csv')
 
 if __name__ == '__main__':
