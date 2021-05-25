@@ -4,3 +4,4 @@ __pycache__/
 Dockerfile
 .dockerignore
 test.py
+app/loaded_data/*.csv
