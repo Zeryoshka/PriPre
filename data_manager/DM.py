@@ -42,7 +42,8 @@ class Data_manager:
             line_count = 0
             for row in content:
                 if line_count:
-                    X.append(datetime.strptime(row['date'], '%Y-%m-%d'))
+                    X.append(datetime.strptime(
+                        row['date'], '%Y-%m-%d %H:%M:%S'))
                     Y.append(float(row['close_value']))
                 line_count += 1
         return X, Y
