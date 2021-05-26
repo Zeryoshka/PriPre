@@ -1,7 +1,9 @@
-from app import app
-from app import models
-from app import DataManager
-from flask import render_template, request
+from app.app import app
+from app.app import models
+from app.app import data_manager as DataManager
+
+from flask import render_template
+from flask import request
 
 from plotly.utils import PlotlyJSONEncoder
 import plotly.graph_objects as go
