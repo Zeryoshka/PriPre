@@ -2,7 +2,7 @@ from genericpath import exists
 import requests
 import apimoex
 import pandas as pd
-from config import START_DATE, SECURITY_LIST, DATA_PATH
+from config import START_DATE, SECURITY_LIST, DATA_PATH, INTERVAL
 import os
 
 
@@ -15,10 +15,12 @@ def form_data() -> None:
     for security in SECURITY_LIST:
         with requests.Session() as session:
             data = apimoex.get_market_candles(
-                session, security=security, start=START_DATE)
+                session,
+                security=security,
+                start=START_DATE,
+                interval=INTERVAL)
             df = pd.DataFrame(data)
-            date, close = list(map(lambda x: x.split()[0],
-                                   df['begin'].values)), df['close']
+            date, close = df['begin'], df['close']
             attr = {'date': date, 'close_value': close}
             df = pd.DataFrame(attr)
             if not os.path.exists(DATA_PATH):
