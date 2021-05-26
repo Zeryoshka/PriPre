@@ -1,6 +1,6 @@
 from app import app
 from app import models
-from app import DataManager
+from app import data_manager
 from flask import render_template, request
 
 from plotly.utils import PlotlyJSONEncoder
@@ -14,7 +14,7 @@ def index():
     # Заглушка, чтобы было проще понимать какие параметры требуются для рендера
     parametrs = {
         # Наимаенования тикетов (списком строк)
-        'tickets': DataManager.ticket_list,
+        'tickets': data_manager.ticket_list,
         'models': models.names  # Наименования моделей (списком строк)
     }
     # !Внимательнее там **parametrs
@@ -26,7 +26,7 @@ def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
     ticket = params['ticket']
-    X, Y = DataManager.give_data(ticket)
+    X, Y = data_manager.give_data(ticket)
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
