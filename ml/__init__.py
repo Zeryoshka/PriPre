@@ -8,7 +8,7 @@ MODELS = {
 }
 
 
-class _Models:
+class Models:
     '''
     Class for describing all models
     '''
@@ -42,6 +42,3 @@ class _Models:
         Function for checking existing of model with name
         '''
         return name in self.names
-
-
-models = _Models(MODELS)
