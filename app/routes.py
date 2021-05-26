@@ -25,7 +25,9 @@ def index():
 def plot_past_view():
     # dict with to param ticket(str) and list of names's strings, named model
     params = request.get_json()
-    ticket = params['ticket']
+    ticket = params['ticket']  # Ticket name from client
+    model_list = params['models']  # Models list : str
+
     X, Y = data_manager.give_data(ticket)
     fig = go.Figure()
     fig.add_trace(
@@ -49,5 +51,7 @@ def plot_past_view():
             color="Black"
         )
     )
+
+    
     return json.dumps(fig, cls=PlotlyJSONEncoder),\
         200, {'Content-Type': 'application/json'}
