@@ -8,14 +8,17 @@ import plotly.graph_objects as go
 
 import json
 
+
 @app.route('/')
 def index():
     # Заглушка, чтобы было проще понимать какие параметры требуются для рендера
     parametrs = {
-        'tickets': DataManager.ticket_list, # Наимаенования тикетов (списком строк)
-        'models': models.names # Наименования моделей (списком строк)
+        # Наимаенования тикетов (списком строк)
+        'tickets': DataManager.ticket_list,
+        'models': models.names  # Наименования моделей (списком строк)
     }
-    return render_template('index-template.html', **parametrs) # !Внимательнее там **parametrs
+    # !Внимательнее там **parametrs
+    return render_template('index-template.html', **parametrs)
 
 
 @app.route('/plot/past', methods=['POST'])
@@ -46,4 +49,5 @@ def plot_past_view():
             color="Black"
         )
     )
-    return json.dumps(fig, cls=PlotlyJSONEncoder), 200, {'Content-Type': 'application/json'}
+    return json.dumps(fig, cls=PlotlyJSONEncoder),\
+        200, {'Content-Type': 'application/json'}

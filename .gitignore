@@ -1,9 +1,9 @@
 __pycache__/
-/.vscode
+*.vscode
 /env
 Dockerfile
 .dockerignore
 test.py
 app/loaded_data/*.csv
 check.txt
-
+report.txt

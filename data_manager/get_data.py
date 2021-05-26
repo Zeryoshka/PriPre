@@ -5,6 +5,7 @@ import pandas as pd
 from config import START_DATE, SECURITY_LIST, DATA_PATH
 import os
 
+
 def form_data() -> None:
     """
     for every ticket in security_list,
@@ -13,15 +14,17 @@ def form_data() -> None:
     """
     for security in SECURITY_LIST:
         with requests.Session() as session:
-            data = apimoex.get_market_candles(session, security=security, start=START_DATE)
+            data = apimoex.get_market_candles(
+                session, security=security, start=START_DATE)
             df = pd.DataFrame(data)
-            date, close = list(map(lambda x: x.split()[0], \
-                df['begin'].values)), df['close']
-            attr = {'date' : date, 'close_value' : close}
+            date, close = list(map(lambda x: x.split()[0],
+                                   df['begin'].values)), df['close']
+            attr = {'date': date, 'close_value': close}
             df = pd.DataFrame(attr)
             if not os.path.exists(DATA_PATH):
                 os.mkdir(DATA_PATH)
             df.to_csv(DATA_PATH + security + '.csv')
+
 
 if __name__ == '__main__':
     form_data()

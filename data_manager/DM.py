@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 from .config import DATA_PATH
 
+
 class Data_manager:
     """
     Class to operate data
@@ -10,13 +11,15 @@ class Data_manager:
     data is stored
     _ticket_list : list[str], holds list of current tickets in folder
     """
+
     def __init__(self):
         """
         Constructor for Data_manager object
         param: DATA_PATH - str
         """
         self._path_to_data = DATA_PATH
-        self._ticket_list = list(map(lambda x: x.split('.')[0], os.listdir(DATA_PATH)))
+        self._ticket_list = list(
+            map(lambda x: x.split('.')[0], os.listdir(DATA_PATH)))
 
     @property
     def ticket_list(self) -> list:
@@ -34,7 +37,7 @@ class Data_manager:
         """
         X = []
         Y = []
-        with open(self._path_to_data + ticket +'.csv', newline='') as csvfile:
+        with open(self._path_to_data + ticket + '.csv', newline='') as csvfile:
             content = csv.DictReader(csvfile)
             line_count = 0
             for row in content:
