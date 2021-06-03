@@ -3,13 +3,16 @@ from .config import FILE_LOAD_K
 from .config import FILE_DUMP_MODEL
 from .config import FILE_DUMP_K
 from .config import FEATURES_COUNT
+from .config import EPHOS_FIT
 
 from .utils import reshaper
 from .utils import normalise
+from .utils import predict_reshaper
 
 import json
 import tensorflow as tf
 from tensorflow import keras
+import pandas as pd
 
 class It_is_alive:
     """
@@ -41,25 +44,48 @@ class It_is_alive:
             }, f)
         self.model.save(FILE_DUMP_MODEL, save_format='h5')
 
-    def predict(self, x_old, y_old, x_pred):
+    def predict(self, base_prices, time_axis):
         """
-        Main method which using for predict model It is alive
+        Main method used for predict model It is alive
         """
-        y_pred = []
-        for x in x_pred:
-            y_pred.append(self.weight)
-        return y_pred
+        x_closes = predict_reshaper(base_prices, FEATURES_COUNT) / self.k
+        out_data = pd.DataFrame(columns=['begin', 'close'])
+        for time_str in time_axis:
+            model_in = pd.DataFrame(x_closes).transpose()
+            val = self.model.predict(model_in)[0][0]
+            out_data = out_data.append({
+                'begin': time_str,
+                'close': val
+            }, ignore_index=True)
+  
+            x_closes = x_closes.shift(1)
+            x_closes['close1'] = val
+        out_data['close'] = out_data['close'] * k
 
-    def fit(self, train_features, train_labels):
+        return out_data
+
+    def lazy_predict(self, test):
+        '''
+        Main method used for fast predict, without generation
+        of line in model It is alive
+        '''
+        new_test = normalise(reshaper(test, FEATURES_COUNT), FEATURES_COUNT, self.k)
+        new_test['close'] = self.model.predict(new_test) * self.k
+        return new_test
+
+    def fit(self, train):
         """
         Function for learning model
         (not use in production, but use for preparing)
         """
-        
+        self.k = max(abs(train['close'].max()), abs(train['close'].min()))
+        train_norm = normalise(
+            reshaper(train, FEATURES_COUNT), FEATURES_COUNT, self.k
+        )
         self.model.fit(
             train_norm[[f'close{i}' for i in range(1, FEATURES_COUNT + 1)]],
             train_norm['close'],
-            epochs=10000,
+            epochs=EPHOS_FIT,
             verbose=2
         )
 
