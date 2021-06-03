@@ -2,6 +2,7 @@ from .config import FILE_LOAD_MODEL
 from .config import FILE_LOAD_K
 from .config import FILE_DUMP_MODEL
 from .config import FILE_DUMP_K
+from .config import FEATURES_COUNT
 
 from .utils import reshaper
 from .utils import normalise
@@ -42,7 +43,7 @@ class It_is_alive:
 
     def predict(self, x_old, y_old, x_pred):
         """
-        Main method which using for predict model CONST
+        Main method which using for predict model It is alive
         """
         y_pred = []
         for x in x_pred:
@@ -60,4 +61,26 @@ class It_is_alive:
             train_norm['close'],
             epochs=10000,
             verbose=2
+        )
+
+    def compile_model(self):
+        """
+        Compile model function
+        (Use for compile model in case somebody break it)
+        """
+        self.model = keras.Sequential([
+            keras.layers.Flatten(input_shape=(FEATURES_COUNT,)),
+            keras.layers.Dense(64, activation=tf.nn.silu),
+            keras.layers.Dense(26, activation=tf.nn.softplus),
+            keras.layers.Dense(24, activation=tf.nn.silu),
+            keras.layers.Dense(40, activation=tf.nn.silu),
+            keras.layers.Dense(30, activation=tf.nn.relu),
+            keras.layers.Dense(30, activation=tf.nn.softplus),
+            keras.layers.Dense(30, activation=tf.nn.relu),
+            keras.layers.Dense(64, activation=tf.nn.silu),
+            keras.layers.Dense(1, activation=tf.nn.relu),
+        ])
+        self.model.compile(optimizer=tf.keras.optimizers.RMSprop(learning_rate=0.001, rho=0.9),
+            loss='mse', 
+            metrics=['mse', 'mae']
         )
