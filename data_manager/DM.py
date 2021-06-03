@@ -18,7 +18,9 @@ class Data_manager:
         param: DATA_PATH - str
         """
         self._path_to_data = DATA_PATH
-        self._ticket_list = list(map(lambda x: x.split(".")[0], os.listdir(DATA_PATH)))
+        self._ticket_list = list(
+            map(lambda x: x.split(".")[0], os.listdir(DATA_PATH))
+        )
 
     @property
     def ticket_list(self) -> list:
@@ -41,7 +43,9 @@ class Data_manager:
             line_count = 0
             for row in content:
                 if line_count:
-                    X.append(datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S"))
+                    X.append(
+                        datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S")
+                    )
                     Y.append(float(row["close_value"]))
                 line_count += 1
         return X, Y

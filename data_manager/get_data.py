@@ -1,4 +1,3 @@
-from genericpath import exists
 import requests
 import apimoex
 import pandas as pd
