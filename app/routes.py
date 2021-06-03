@@ -31,7 +31,7 @@ def plot_past_view():
     ticket = params["ticket"]  # Ticket name from client
     model_list = params["models"]  # Models list : str
 
-    X, Y = data_manager.give_data(ticket, start_date='2021-05-01', end_date='2021-06-01')
+    X, Y = data_manager.give_data(ticket, start_date='2021-05-01', end_date='2021-06-03')
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=X, x0=X[0], y=Y, y0=Y[0], name="Real value"))
     fig.update_layout(
