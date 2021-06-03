@@ -9,6 +9,7 @@ from plotly.utils import PlotlyJSONEncoder
 import plotly.graph_objects as go
 
 import json
+import pandas as pd
 
 
 @app.route("/")
@@ -30,7 +31,7 @@ def plot_past_view():
     ticket = params["ticket"]  # Ticket name from client
     model_list = params["models"]  # Models list : str
 
-    X, Y = data_manager.give_data(ticket)
+    X, Y = data_manager.give_data(ticket, start_date='2021-05-01', end_date='2021-06-01')
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=X, x0=X[0], y=Y, y0=Y[0], name="Real value"))
     fig.update_layout(
@@ -46,3 +47,23 @@ def plot_past_view():
         200,
         {"Content-Type": "application/json"},
     )
+
+@app.route("/stats/")
+def display_stats():
+    """
+    Returns html page with stats selection
+    """
+    # dict with to param ticket(str) and list of names's strings, named model
+    parametrs = {
+        # Наимаенования тикетов (списком строк)
+        "tickets": data_manager.ticket_list,
+        "models": models.names,  # Наименования моделей (списком строк)
+    }
+    return render_template("stats-template.html", **parametrs)
+
+# @app.route("stats/count", methods=["POST"])
+# def count_stats():
+#     params = request.get_json()
+#     ticket = params["ticket"]  # Ticket name from client
+#     period = params["start_date"] # Date to start count
+#     pass
