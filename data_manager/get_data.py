@@ -2,6 +2,7 @@
 This file implements script
 Which loads data from apimoex
 """
+
 import os
 import requests
 import apimoex
