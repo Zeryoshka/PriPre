@@ -1,9 +1,13 @@
-from .const_model import Const
+from .it_is_alive import It_is_alive
 
 # Dict of models
 # key: name of model
 # value: function, for predict results
-MODELS = {"const": Const}
+
+
+MODELS = {
+    "It is alive": It_is_alive
+}
 
 
 class Models:
