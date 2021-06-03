@@ -32,7 +32,9 @@ class It_is_alive:
         """
         with open(FILE_LOAD_K, 'r') as f:
             self.k = json.load(f)['k']
-        self.model = keras.models.load_model(FILE_LOAD_MODEL)
+        self.model = keras.models.load_model(
+            FILE_LOAD_MODEL
+        )
 
     def dump(self):
         """
@@ -60,7 +62,7 @@ class It_is_alive:
   
             x_closes = x_closes.shift(1)
             x_closes['close1'] = val
-        out_data['close'] = out_data['close'] * k
+        out_data['close'] = out_data['close'] * self.k
 
         return out_data
 
@@ -69,11 +71,20 @@ class It_is_alive:
         Main method used for fast predict, without generation
         of line in model It is alive
         '''
-        new_test = normalise(reshaper(test, FEATURES_COUNT), FEATURES_COUNT, self.k)
-        new_test['close'] = self.model.predict(new_test) * self.k
-        return new_test
+        new_test = reshaper(test, FEATURES_COUNT)
+        new_test['close'] = self.model.predict(
+            normalise(
+                new_test[
+                    [f'close{i}' for i in range(1,FEATURES_COUNT+1)]
+                ],
+                FEATURES_COUNT, 
+                self.k
+            )
+        ) * self.k
 
-    def fit(self, train):
+        return new_test[['begin', 'close']]
+
+    def fit(self, train, verbose=2):
         """
         Function for learning model
         (not use in production, but use for preparing)
@@ -86,7 +97,7 @@ class It_is_alive:
             train_norm[[f'close{i}' for i in range(1, FEATURES_COUNT + 1)]],
             train_norm['close'],
             epochs=EPHOS_FIT,
-            verbose=2
+            verbose=verbose
         )
 
     def compile_model(self):
