@@ -37,7 +37,7 @@ model.compile_model()
 model.fit(train)
 pred = model.lazy_predict(test)
 train_pred = model.lazy_predict(train)
-
+model.dump()
 plt.plot(
     train['begin'], 
     train['close'], 
