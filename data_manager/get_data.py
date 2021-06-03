@@ -6,7 +6,7 @@ import os
 import requests
 import apimoex
 import pandas as pd
-from .config import START_DATE, END_DATE, SECURITY_LIST, DATA_PATH, INTERVAL
+from config import START_DATE, END_DATE, SECURITY_LIST, DATA_PATH, INTERVAL
 
 
 def form_data() -> None:
