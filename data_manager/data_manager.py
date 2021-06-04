@@ -22,7 +22,9 @@ class DataManager:
         param: DATA_PATH - str
         """
         self._path_to_data = DATA_PATH
-        self._ticket_list = list(map(lambda x: x.split(".")[0], os.listdir(DATA_PATH)))
+        self._ticket_list = list(
+            map(lambda x: x.split(".")[0], os.listdir(DATA_PATH))
+        )
 
     @property
     def ticket_list(self) -> list:
@@ -32,7 +34,9 @@ class DataManager:
         """
         return self._ticket_list
 
-    def give_data(self, ticket, start_date=START_DATE, end_date=END_DATE) -> tuple:
+    def give_data(
+        self, ticket, start_date=START_DATE, end_date=END_DATE
+    ) -> tuple:
         """
         Opens up csv file and reads it to two lists
         x_axis : list of datetime.datetime objects

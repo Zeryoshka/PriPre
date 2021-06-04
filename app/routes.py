@@ -49,7 +49,11 @@ def plot_past_view():
         ticket, start_date="2021-05-01", end_date="2021-06-03"
     )
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=dates, x0=dates[0], y=values, y0=values[0], name="Real value"))
+    fig.add_trace(
+        go.Scatter(
+            x=dates, x0=dates[0], y=values, y0=values[0], name="Real value"
+        )
+    )
     fig.update_layout(
         title=go.layout.Title(text=f"PriPre {ticket} ticket graph"),
         yaxis_title="Close value",
