@@ -1,3 +1,7 @@
+"""
+File to include all needed imports
+"""
+
 from flask import Flask
 from data_manager import DataManager
 from ml import Models
