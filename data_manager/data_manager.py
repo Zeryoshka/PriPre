@@ -1,10 +1,14 @@
-import csv
-from datetime import datetime
+"""
+This file contains DataManager class
+Which are used in app package
+"""
+
 import os
-from .config import DATA_PATH
+import pandas as pd
+from .config import DATA_PATH, START_DATE, END_DATE
 
 
-class Data_manager:
+class DataManager:
     """
     Class to operate data
     _path_to_data : str, holds path to folder, there
@@ -30,22 +34,18 @@ class Data_manager:
         """
         return self._ticket_list
 
-    def give_data(self, ticket) -> tuple:
+    def give_data(
+        self, ticket, start_date=START_DATE, end_date=END_DATE
+    ) -> tuple:
         """
         Opens up csv file and reads it to two lists
-        X : list of datetime.datetime objects
-        Y : list of float numbers
+        x_axis : list of datetime.datetime objects
+        y_axis : list of float numbers
         """
-        X = []
-        Y = []
         with open(self._path_to_data + ticket + ".csv", newline="") as csvfile:
-            content = csv.DictReader(csvfile)
-            line_count = 0
-            for row in content:
-                if line_count:
-                    X.append(
-                        datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S")
-                    )
-                    Y.append(float(row["close_value"]))
-                line_count += 1
-        return X, Y
+            content = pd.read_csv(csvfile)
+            values = content.loc[
+                (content["date"] >= start_date) & (content["date"] <= end_date)
+            ]
+            x_axis, y_axis = list(values["date"]), list(values["close_value"])
+            return x_axis, y_axis

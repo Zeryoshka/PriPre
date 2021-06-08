@@ -1,3 +1,14 @@
-from .DM import Data_manager
+"""
+This module interprets handling data
+In config.py stored:
+    - constants for selecting period,
+    - path to data storage,
+    - list of used tickets
+DM.py contains Data_manager class, which used to:
+    - return list of used tickets
+    - get data for plotting
+"""
 
-DataManager = Data_manager()
+from .data_manager import DataManager
+
+Data_Manager = DataManager()
