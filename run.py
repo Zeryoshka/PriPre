@@ -1,8 +1,9 @@
-from app import app
+"""
+This module implents script,
+Which laucnhes app
+"""
 
-"""
-importing flask app from app's catalog.
-"""
+from app import app
 
 if __name__ == "__main__":
     app.run()

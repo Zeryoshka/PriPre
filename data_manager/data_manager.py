@@ -48,12 +48,4 @@ class DataManager:
                 (content["date"] >= start_date) & (content["date"] <= end_date)
             ]
             x_axis, y_axis = list(values["date"]), list(values["close_value"])
-            # line_count = 0
-            # for row in content:
-            #     if line_count:
-            #         X.append(
-            #             datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S")
-            #         )
-            #         Y.append(float(row["close_value"]))
-            #     line_count += 1
             return x_axis, y_axis
