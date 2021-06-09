@@ -1,0 +1,183 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+.main-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('img/background.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    background-color: rgba(1, 1, 1, 0.274);
+}
+
+.header__text {
+    display: flex;
+    margin: auto;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    padding: 1rem;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.content__left-column {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    justify-content: space-between;
+    align-items: start;
+    height: 100%;
+}
+
+.content__form-block {
+    display: flex;
+    width: 95%;
+}
+
+.form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: rgba(10, 10, 10, 0.4);
+    padding: 1rem 0;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.form-ticket {
+    display: flex;
+    margin: 0.6rem 0;
+    color: #fff;
+}
+
+.form-ticket__label {
+    display: flex;
+    padding-right: 0.5em;
+}
+
+.form-ticket__select {
+    display: flex;
+    font-size: 1rem;
+    padding: 0.25rem 0.4rem 0.1rem;
+    border: solid 1px #fff;
+    background: none;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+.form-ticket__option {
+    background-color: rgba(60, 60, 60, 0.5);
+    border: none;
+}
+
+.form__date-line {
+    display: flex;
+    margin: 0.6rem;
+}
+
+.form__submit {
+    display: flex;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0.4em;
+    border: #fff solid 1px;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 100;
+    font-family: 'Open Sans';
+    padding: 0.2em 0.4em;
+    margin: 0.6rem 0;
+    transition: background-color 0.25s ease;
+}
+
+.form__submit:hover{
+    color: #000;
+    background-color: #fff;
+}
+
+.content__stats {
+    background-color: rgba(10, 10, 10, 0.4);
+    display: flex;
+    width: 95%;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+.stat-line {
+    display: flex;
+    margin: 0.5rem 0;
+    width: 90%;
+    align-items: center;
+}
+
+.date-line__label {
+    display: flex;
+    margin-right: 1rem;
+}
+
+.date-line {
+    padding: 0.3rem 0.2rem;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.stat-line__name {
+    margin-right: 1rem;
+}
+
+.content__chart-container {
+    display: flex;
+    width: 70%;
+    box-sizing: border-box;
+}
+
+.chart-container__chart {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+    background-color: rgba(10, 10, 10, 0.4);
+}
+
+
+::-webkit-scrollbar-track {
+    background-color: none;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+::-webkit-scrollbar{
+    width: 5px;
+}
