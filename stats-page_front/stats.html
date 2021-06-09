@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{url_for('static', filename='style/stats-style.css)}}"> -->
+    <link rel="stylesheet" href="stats-style.css">
+    <title>PriPre</title>
+    <!-- <script src="{{url_for('static', filename='plotly-latest.min.js')}}"></script> -->
+    <!-- <script src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script> -->
+    <script src="plotly-latest.min.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body class="main-container">
+
+    <header class="main-container__header header">
+        <h1 class="header__text">
+            PriPre
+        </h1>
+    </header>
+    <content class="main-container__content content">
+        <div class="content__left-column">
+            <section class="content__form-block form-block">
+                <form class="form-blcok__form form" id="form">
+                    <div class="form__form-ticket form-ticket">
+                        <label class="form-ticket__label">Ticket:</label>
+                        <select id="ticket-select" class="form-ticket__select" name="ticket">
+                            {% for ticket in tickets %}
+                                <option class="form-ticket__option" value="{{ticket}}" label="{{ticket}}">
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form__date-line">
+                        <label class="date-line__label">От:</label>
+                        <input 
+                            class="date-line" type="date"
+                            value="{{min_date}}" min="{{min_date}}"
+                            max="{{max_date}}" name="date_start"
+                            id="date_start"
+                        >
+                    </div>
+                    <div class="form__date-line">
+                        <label class="date-line__label">До:</label>
+                        <input 
+                            class="date-line" type="date"
+                            value="{{max_date}}" min="{{min_date}}"
+                            max="{{max_date}}" name="date_end"
+                            id="date_end"
+                        >
+                    </div>
+	                <input class="form__submit" type="submit" value="Построить">
+                </form>
+            </section>
+            <section class="content__stats">
+                <div class="stat-line">
+                    <div class="stat-line__name">Среднее значение: </div>
+                    <div class="stat-line__result" id="stat-avg">-</div>
+                </div>
+                <div class="stat-line">
+                    <div class="stat-line__name">Медиана: </div>
+                    <div class="stat-line__result" id="stat-median">-</div>
+                </div>
+                <div class="stat-line">
+                    <div class="stat-line__name">Дисперсия: </div>
+                    <div class="stat-line__result" id="stat-variants">-</div>
+                </div>
+                <div class="stat-line">
+                    <div class="stat-line__name">Мода: </div>
+                    <div class="stat-line__result" id="stat-mode">-</div>
+                </div>
+                <div class="stat-line">
+                    <div class="stat-line__name">Стандартное отклонение: </div>
+                    <div class="stat-line__result" id="stat-std">-</div>
+                </div>
+            </section>
+        </div>
+        <section class="content__chart-container chart-container " >
+            <div class="chart-container__chart" id="chart"></div>
+        </section>
+    </content>
+    <script src="stats.js"></script>
+    <!-- <script src="{{url_for('static', filename='stats.js')}}"></script> -->
+</body>
+</html>
