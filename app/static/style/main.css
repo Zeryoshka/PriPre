@@ -22,6 +22,8 @@ html {
 
 .header{
     display: flex;
+    text-decoration: none;
+    color: #fff;
     width: 100%;
     height: 10vh;
     background-color: rgba(1, 1, 1, 0.274);

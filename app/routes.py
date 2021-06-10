@@ -93,7 +93,8 @@ def display_stats():
 
     parametrs = {
         "tickets": data_manager.ticket_list,
-        "models": models.names,
+        "min_date": data_manager.start_date,
+        "max_date": data_manager.end_date
     }
 
     return render_template("stats.html", **parametrs)
