@@ -81,7 +81,7 @@ def plot_past_view():
     )
 
 
-@app.route("/stats/")
+@app.route("/stats/", methods=["GET"])
 def display_stats():
     """
     Returns html page with stats selection
@@ -104,14 +104,15 @@ def count_stats():
     View which sends to client
     JSON with needed values of given ticket and period
     """
+    print(request.args)
     # params = request.get_json()
-    ticket = request.args.get('ticket-select')  # params["ticket"] Ticket name from client
+    ticket = request.args['ticket']  # params["ticket"] Ticket name from client
     # if ticket not in data_manager.ticket_list:
     #     return 404
-    print(request.data)
+    
     period_start, period_end = (
-        request.args.get('date_start'),
-        request.args.get('date_end'),
+        request.args['date_start'],
+        request.args['date_end'],
     )
     # if not (validate_data(period_start) and validate_data(period_end)):
     #     return 404
@@ -145,5 +146,5 @@ def count_stats():
         "variance": values.var(),
         }
     }
-
+    print(answer)
     return json.dumps(answer)
