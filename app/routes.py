@@ -17,6 +17,7 @@ from app.app import app
 from app.app import models
 from app.app import data_manager
 
+
 def validate_data(date_text):
     """
     Function used for validating data
@@ -25,11 +26,11 @@ def validate_data(date_text):
     """
 
     try:
-        datetime.datetime.strptime(date_text, '%Y-%m-%d')
-    except:
+        datetime.datetime.strptime(date_text, "%Y-%m-%d")
+    except ValueError:
         return False
-    
     return True
+
 
 @app.route("/")
 def index():
@@ -104,19 +105,16 @@ def count_stats():
     View which sends to client
     JSON with needed values of given ticket and period
     """
-    print(request.args)
-    # params = request.get_json()
-    ticket = request.args['ticket']  # params["ticket"] Ticket name from client
-    # if ticket not in data_manager.ticket_list:
-    #     return 404
-    
+
+    ticket = request.args["ticket"]  # params["ticket"] Ticket name from client
+    if ticket not in data_manager.ticket_list:
+        return 400
     period_start, period_end = (
-        request.args['date_start'],
-        request.args['date_end'],
+        request.args["date_start"],
+        request.args["date_end"],
     )
-    # if not (validate_data(period_start) and validate_data(period_end)):
-    #     return 404
-    
+    if not (validate_data(period_start) and validate_data(period_end)):
+        return 400
     dates, values = data_manager.give_data(
         ticket=ticket, start_date=period_start, end_date=period_end
     )
@@ -135,16 +133,14 @@ def count_stats():
         font=dict(family="Courier New, monospace", size=18, color="Black"),
     )
     values = pd.Series(data=values, index=dates)
-    
     answer = {
-        'chart': json.dumps(fig, cls=PlotlyJSONEncoder),
-        'stats': {
-            "standard_square": values.std(),
-        "mean_value": values.mean(),
-        "median_value": values.median(),
-        "mode_value": values.mode()[0],
-        "variance": values.var(),
-        }
+        "chart": fig.to_dict(),
+        "stats": {
+            "std": values.std(),
+            "avg": values.mean(),
+            "median": values.median(),
+            "mode": values.mode()[0],
+            "variants": values.var(),
+        },
     }
-    print(answer)
-    return json.dumps(answer)
+    return answer
