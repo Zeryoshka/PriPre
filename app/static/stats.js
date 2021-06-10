@@ -1,3 +1,5 @@
+var NUM_LEN = 7
+
 Plotly.plot('chart', {}, {})
 
 $('#form').on('submit', function(e){
@@ -14,11 +16,11 @@ $('#form').on('submit', function(e){
         data: $('#form').serialize(),
         dataType: 'json',
         success: function(json){
-            $('#stat-avg').text(json.stats.avg)
-            $('#stat-median').text(json.stats.median)
-            $('#stat-variants').text(json.stats.variants)
-            $('#stat-mode').text(json.stats.mode)
-            $('#stat-std').text(json.stats.std)
+            $('#stat-avg').text(json.stats.avg.toPrecision(NUM_LEN))
+            $('#stat-median').text(json.stats.median.toPrecision(NUM_LEN))
+            $('#stat-variants').text(json.stats.variants.toPrecision(NUM_LEN))
+            $('#stat-mode').text(json.stats.mode.toPrecision(NUM_LEN))
+            $('#stat-std').text(json.stats.std.toPrecision(NUM_LEN))
             Plotly.newPlot('chart', json.chart)
         },
         statusCode: {
