@@ -93,7 +93,10 @@ def display_stats():
 
     parametrs = {
         "tickets": data_manager.ticket_list,
-        "models": models.names,
+        "min_date": "2021-03-01", 
+        # Минимальная дата, до которой стоимостей акций нет, видимо достается через dataMangaer
+        "max_date": "2021-05-11",
+        # Mаксимальная дата, после которой стоимостей акций нет, видимо достается через dataMangaer
     }
 
     return render_template("stats.html", **parametrs)
