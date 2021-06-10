@@ -4,6 +4,7 @@ Used to implement backend logic of app
 """
 
 import json
+import datetime
 import pandas as pd
 
 from plotly.utils import PlotlyJSONEncoder
@@ -16,6 +17,19 @@ from app.app import app
 from app.app import models
 from app.app import data_manager
 
+def validate_data(date_text):
+    """
+    Function used for validating data
+    In get_stats function
+    Takes string with %Y-%m-%d data format
+    """
+
+    try:
+        datetime.datetime.strptime(date_text, '%Y-%m-%d')
+    except:
+        return False
+    
+    return True
 
 @app.route("/")
 def index():
@@ -45,9 +59,7 @@ def plot_past_view():
     ticket = params["ticket"]  # Ticket name from client
     model_list = params["models"]  # Models list : str
 
-    dates, values = data_manager.give_data(
-        ticket, start_date="2021-05-01", end_date="2021-06-03"
-    )
+    dates, values = data_manager.give_data(ticket)
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
@@ -83,31 +95,55 @@ def display_stats():
         "models": models.names,
     }
 
-    return render_template("stats-template.html", **parametrs)
+    return render_template("stats.html", **parametrs)
 
 
-@app.route("/stats/count", methods=["GET"])
+@app.route("/get_stats", methods=["GET"])
 def count_stats():
     """
     View which sends to client
     JSON with needed values of given ticket and period
     """
     # params = request.get_json()
-    ticket = "YNDX"  # params["ticket"] Ticket name from client
+    ticket = request.args.get('ticket-select')  # params["ticket"] Ticket name from client
+    # if ticket not in data_manager.ticket_list:
+    #     return 404
+    print(request.data)
     period_start, period_end = (
-        "2021-01-01",
-        "2021-04-04",
-    )  # params["start_date"], params["end_date"]  Date to start count
+        request.args.get('date_start'),
+        request.args.get('date_end'),
+    )
+    # if not (validate_data(period_start) and validate_data(period_end)):
+    #     return 404
+    
     dates, values = data_manager.give_data(
         ticket=ticket, start_date=period_start, end_date=period_end
     )
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=dates, x0=dates[0], y=values, y0=values[0], name="Real value"
+        )
+    )
+    fig.update_layout(
+        title=go.layout.Title(text=f"PriPre {ticket} ticket graph"),
+        yaxis_title="Close value",
+        xaxis_title="Date",
+        showlegend=True,
+        legend_title_text="Tickets",
+        font=dict(family="Courier New, monospace", size=18, color="Black"),
+    )
     values = pd.Series(data=values, index=dates)
+    
     answer = {
-        "standard_square": values.std(),
+        'chart': json.dumps(fig, cls=PlotlyJSONEncoder),
+        'stats': {
+            "standard_square": values.std(),
         "mean_value": values.mean(),
         "median_value": values.median(),
         "mode_value": values.mode()[0],
         "variance": values.var(),
+        }
     }
 
     return json.dumps(answer)
