@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="{{url_for('static', filename='style/stats-style.css)}}"> -->
-    <link rel="stylesheet" href="stats-style.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/stats-style.css')}}">
     <title>PriPre</title>
-    <!-- <script src="{{url_for('static', filename='plotly-latest.min.js')}}"></script> -->
-    <!-- <script src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script> -->
-    <script src="plotly-latest.min.js"></script>
-    <script src="jquery-3.6.0.min.js"></script>
+    <script src="{{url_for('static', filename='plotly-latest.min.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script>
 </head>
 <body class="main-container">
 
@@ -79,7 +76,6 @@
             <div class="chart-container__chart" id="chart"></div>
         </section>
     </content>
-    <script src="stats.js"></script>
-    <!-- <script src="{{url_for('static', filename='stats.js')}}"></script> -->
+    <script src="{{url_for('static', filename='stats.js')}}"></script>
 </body>
 </html>

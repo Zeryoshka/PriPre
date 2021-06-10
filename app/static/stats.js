@@ -19,7 +19,7 @@ $('#form').on('submit', function(e){
             $('#stat-variants').text(json.stats.variants)
             $('#stat-mode').text(json.stats.mode)
             $('#stat-std').text(json.stats.std)
-            Plotly.newPlot('chart', json.chart, {})
+            Plotly.newPlot('chart', json.chart)
         },
         statusCode: {
             400: function() {
