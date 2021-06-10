@@ -25,6 +25,8 @@ class DataManager:
         self._ticket_list = list(
             map(lambda x: x.split(".")[0], os.listdir(DATA_PATH))
         )
+        self.start_date = START_DATE
+        self.end_date = END_DATE
 
     @property
     def ticket_list(self) -> list:
