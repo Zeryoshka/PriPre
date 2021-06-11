@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import shape
 from .config import FILE_LOAD_MODEL
 from .config import FILE_LOAD_K
 from .config import FILE_DUMP_MODEL
@@ -7,12 +8,12 @@ from .config import EPHOS_FIT
 
 from .utils import reshaper
 from .utils import normalise
-from .utils import predict_reshaper
 
 import json
 import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
+import numpy as np
 
 class It_is_alive:
     """
@@ -51,25 +52,22 @@ class It_is_alive:
         self.model.save(to_files[1], save_format='h5')
 
     def predict(self, base_prices, time_axis):
-        """
+        """ 
         Main method used for predict model It is alive
         
-        base_prices - DataFrame with one column, which len is more then FEATURES_COUNT
+        base_prices - Series with one column, which len is more then FEATURES_COUNT
         it is more then FEATURES_COUNT last prices of current_ticket
         time_axis - Series with time-strings for prediction
         """
-        x_closes = predict_reshaper(base_prices, FEATURES_COUNT) / self.k
+        x_closes = np.array(base_prices[-FEATURES_COUNT:]) / self.k
         out_data = pd.DataFrame(columns=['begin', 'close'])
         for time_str in time_axis:
-            model_in = pd.DataFrame(x_closes).transpose()
-            val = self.model.predict(model_in)[0][0]
+            val = self.model.predict(x_closes.reshape((1, FEATURES_COUNT)))[0][0]
             out_data = out_data.append({
                 'begin': time_str,
                 'close': val
             }, ignore_index=True)
-  
-            x_closes = x_closes.shift(1)
-            x_closes['close1'] = val
+            x_closes = np.append([val], x_closes[:-1])
         out_data['close'] = out_data['close'] * self.k
 
         return out_data
