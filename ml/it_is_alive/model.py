@@ -26,29 +26,37 @@ class It_is_alive:
         self.model = None
         self.k = None
 
-    def load(self):
+    def load(self, from_files=[FILE_LOAD_K, FILE_LOAD_MODEL]):
         """
         Function for loading weights/parametrs from file
+        from_files - list with 2 file names
+        (first - k-file, second - model-file)
         """
-        with open(FILE_LOAD_K, 'r') as f:
+        with open(from_files[0], 'r') as f:
             self.k = json.load(f)['k']
         self.model = keras.models.load_model(
-            FILE_LOAD_MODEL
+            from_files[1]
         )
 
-    def dump(self):
+    def dump(self, to_files=[FILE_DUMP_K, FILE_DUMP_MODEL]):
         """
         Method for save weight in file after fit
+        to_files - list with 2 file names
+        (first - k-file, second - model-file)
         """
-        with open(FILE_DUMP_K, 'w') as f:
+        with open(to_files[0], 'w') as f:
             json.dump({
                 'k': self.k
             }, f)
-        self.model.save(FILE_DUMP_MODEL, save_format='h5')
+        self.model.save(to_files[1], save_format='h5')
 
     def predict(self, base_prices, time_axis):
         """
         Main method used for predict model It is alive
+        
+        base_prices - DataFrame with one column, which len is more then FEATURES_COUNT
+        it is more then FEATURES_COUNT last prices of current_ticket
+        time_axis - Series with time-strings for prediction
         """
         x_closes = predict_reshaper(base_prices, FEATURES_COUNT) / self.k
         out_data = pd.DataFrame(columns=['begin', 'close'])
@@ -66,12 +74,13 @@ class It_is_alive:
 
         return out_data
 
-    def lazy_predict(self, test):
+    def lazy_predict(self, df):
         '''
         Main method used for fast predict, without generation
         of line in model It is alive
+        df - DataFrame with ['close', 'begin'] len: FEATURES_COUNT(from train)+test
         '''
-        new_test = reshaper(test, FEATURES_COUNT)
+        new_test = reshaper(df, FEATURES_COUNT)
         new_test['close'] = self.model.predict(
             normalise(
                 new_test[
@@ -88,6 +97,8 @@ class It_is_alive:
         """
         Function for learning model
         (not use in production, but use for preparing)
+
+        train - DataFrame with to column ['close', 'begin'] for training
         """
         self.k = max(abs(train['close'].max()), abs(train['close'].min()))
         train_norm = normalise(
