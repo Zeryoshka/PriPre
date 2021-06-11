@@ -1,0 +1,1 @@
+from .model import It_is_alive
