@@ -3,9 +3,11 @@ This file implements script
 Which loads data from apimoex
 """
 
+from pandas.core import frame
 from data_manager import DataManager, Data_Manager
 import data_manager
 from ml import Models
+import pandas as pd
 
 PRICES_COUNT = 100
 
@@ -31,7 +33,9 @@ if __name__ == "__main__":
     models = Models()
     data_manager = DataManager()
     for ticket in data_manager.ticket_list:
-        train, test = slice_data(data_manager.give_data(ticket))
+        dates, values = data_manager.give_data(ticket)
+        data = pd.DataFrame({'begin' : dates.values, 'close' : values.values})
+        train, test = slice_data(data)
         for model in models:
             model.compile_model()
             model.fit(train)
