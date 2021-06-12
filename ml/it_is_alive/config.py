@@ -4,5 +4,5 @@ FILE_LOAD_K = 'ml/it_is_alive/k.json'
 FILE_DUMP_K = 'k.json'
 FILE_DUMP_MODEL = 'model.h5'
 
-FEATURES_COUNT = 50
-EPHOS_FIT = 10000
+FEATURES_COUNT = 60
+EPHOS_FIT = 1000

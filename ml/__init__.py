@@ -6,7 +6,7 @@ from .it_is_alive import It_is_alive
 
 
 MODELS = {
-    "It is alive": It_is_alive
+    "It is alive": It_is_alive()
 }
 
 
@@ -15,7 +15,7 @@ class Models:
     Class for describing all models
     """
 
-    def __init__(self, MODELS):
+    def __init__(self, MODELS=MODELS):
         """
         Constructor of models object
         param: models - dict

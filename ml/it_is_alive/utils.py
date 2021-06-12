@@ -17,7 +17,7 @@ def reshaper(df, n):
     '''
     function for reshape test df
     '''
-    new_df = pd.DataFrame(df['begin'])
+    new_df = df.copy(deep=True)
     for i in range(1,n + 1):
         # Он убирает последние i элементов, заменяя их нулями
         new_df[f'close{i}'] = pd.Series([0]*i).append(
