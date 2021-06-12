@@ -18,6 +18,29 @@ class DataManager:
     _ticket_list : list[str], holds list of current tickets in folder
     """
 
+    @staticmethod
+    def update_data(ticket_list=SECURITY_LIST, start_date=START_DATE, end_date=END_DATE, interval=INTERVAL, path=DATA_PATH) -> None:
+        """
+        Used for updating data as a class method
+        Works same as get_data.py script
+        """
+        for security in ticket_list:
+            with requests.Session() as session:
+                data = apimoex.get_market_candles(
+                    session,
+                    security=security,
+                    start=start_date,
+                    interval=interval,
+                    end=end_date,
+                )
+                whole_frame = pd.DataFrame(data)
+                date, close = whole_frame["begin"], whole_frame["close"]
+                attr = {"begin": date, "close": close}
+                whole_frame = pd.DataFrame(attr)
+                if not os.path.exists(path):
+                    os.mkdir(path)
+                whole_frame.to_csv(path + security + ".csv")
+
     def __init__(self) -> None:
         """
         Constructor for Data_manager object
@@ -49,25 +72,3 @@ class DataManager:
             ]
             x_axis, y_axis = values["begin"], values["close"]
             return x_axis, y_axis
-
-    def update_data(self, start_date=START_DATE, end_date=END_DATE, interval=INTERVAL) -> None:
-        """
-        Used for updating data as a class method
-        Works same as get_data.py script
-        """
-        for security in self.ticket_list:
-            with requests.Session() as session:
-                data = apimoex.get_market_candles(
-                    session,
-                    security=security,
-                    start=start_date,
-                    interval=interval,
-                    end=end_date,
-                )
-                whole_frame = pd.DataFrame(data)
-                date, close = whole_frame["begin"], whole_frame["close"]
-                attr = {"begin": date, "close": close}
-                whole_frame = pd.DataFrame(attr)
-                if not os.path.exists(DATA_PATH):
-                    os.mkdir(DATA_PATH)
-                whole_frame.to_csv(DATA_PATH + security + ".csv")
