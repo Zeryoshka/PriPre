@@ -4,8 +4,10 @@ Which are used in app package
 """
 
 import os
+import requests
+import apimoex
 import pandas as pd
-from .config import DATA_PATH, START_DATE, END_DATE
+from .config import START_DATE, END_DATE, SECURITY_LIST, DATA_PATH, INTERVAL
 
 
 class DataManager:
@@ -16,15 +18,13 @@ class DataManager:
     _ticket_list : list[str], holds list of current tickets in folder
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Constructor for Data_manager object
         param: DATA_PATH - str
         """
         self._path_to_data = DATA_PATH
-        self._ticket_list = list(
-            map(lambda x: x.split(".")[0], os.listdir(DATA_PATH))
-        )
+        self._ticket_list = list(map(lambda x: x.split(".")[0], os.listdir(DATA_PATH)))
         self.start_date = START_DATE
         self.end_date = END_DATE
 
@@ -36,9 +36,7 @@ class DataManager:
         """
         return self._ticket_list
 
-    def give_data(
-        self, ticket, start_date=START_DATE, end_date=END_DATE
-    ) -> tuple:
+    def give_data(self, ticket: str, start_date=START_DATE, end_date=END_DATE) -> tuple:
         """
         Opens up csv file and reads it to two lists
         x_axis : list of datetime.datetime objects
@@ -51,6 +49,25 @@ class DataManager:
             ]
             x_axis, y_axis = values["begin"], values["close"]
             return x_axis, y_axis
-    
-    # @staticmethod
-    # def get_data_csv()
+
+    def update_data(self, start_date=START_DATE, end_date=END_DATE, interval=INTERVAL) -> None:
+        """
+        Used for updating data as a class method
+        Works same as get_data.py script
+        """
+        for security in self.ticket_list:
+            with requests.Session() as session:
+                data = apimoex.get_market_candles(
+                    session,
+                    security=security,
+                    start=start_date,
+                    interval=interval,
+                    end=end_date,
+                )
+                whole_frame = pd.DataFrame(data)
+                date, close = whole_frame["begin"], whole_frame["close"]
+                attr = {"begin": date, "close": close}
+                whole_frame = pd.DataFrame(attr)
+                if not os.path.exists(DATA_PATH):
+                    os.mkdir(DATA_PATH)
+                whole_frame.to_csv(DATA_PATH + security + ".csv")
