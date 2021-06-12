@@ -18,7 +18,7 @@ from app.app import app
 from app.app import models
 from app.app import data_manager
 from app.app import prediction_manager
-
+from app.app import lazy_prediction_manager
 
 def validate_data(date_text):
     """
@@ -74,6 +74,12 @@ def plot_past_view():
         fig.add_trace(
             go.Scatter(
                 x=dates_pred, y=values_pred, name="Predicted value"
+            )
+        )
+        dates_lazy_pred, values_lazy_pred = lazy_prediction_manager.give_data(ticket)
+        fig.add_trace(
+            go.Scatter(
+                x=dates_lazy_pred, y=values_lazy_pred, name="Predicted value"
             )
         )
     fig.update_layout(

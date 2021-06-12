@@ -5,6 +5,7 @@ File to include all needed imports
 from flask import Flask
 from data_manager import DataManager
 from data_manager import PREDICTION_PATH
+from data_manager import LAZY_PREDICTION_PATH
 
 class Models():
     """
@@ -21,3 +22,4 @@ models = Models()
 app = Flask(__name__)
 data_manager = DataManager()
 prediction_manager = DataManager(PREDICTION_PATH)
+lazy_prediction_manager = DataManager(LAZY_PREDICTION_PATH)
