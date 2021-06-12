@@ -9,11 +9,16 @@ from .config import EPHOS_FIT
 from .utils import reshaper
 from .utils import normalise
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ["CUDA_VISIBLE_DEVICES"]= '-1' 
+
 import json
 import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
+
 
 class It_is_alive:
     """

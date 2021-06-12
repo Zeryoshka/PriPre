@@ -4,8 +4,6 @@ Which loads data from apimoex
 """
 from ml.it_is_alive.config import EPHOS_FIT
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-os.environ["CUDA_VISIBLE_DEVICES"]= '-1' 
 
 from data_manager import DataManager
 from data_manager import LAZY_PREDICTION_PATH
@@ -44,7 +42,7 @@ if __name__ == "__main__":
         model = models['It is alive']
         print(model)
         model.compile_model()
-        model.fit(train)
+        model.fit(train,)
         print("---------------------------------")
         print(f"Learning finished with ticket {ticket}")
         print("---------------------------------")
@@ -55,10 +53,10 @@ if __name__ == "__main__":
         print("---------------------------------")
         print(f"Prediction finished with ticket {ticket}")
         print("---------------------------------")
-        test_prediction = model.lazy_predict(test['begin'])
-        if not os.path.exists(data_manager):
+        test_prediction = model.lazy_predict(test)
+        if not os.path.exists(LAZY_PREDICTION_PATH):
             os.mkdir(LAZY_PREDICTION_PATH)
         test_prediction.to_csv(LAZY_PREDICTION_PATH + ticket + ".csv")
         print("---------------------------------")
-        print(f"Lazy rediction finished with ticket {ticket}")
+        print(f"Lazy prediction finished with ticket {ticket}")
         print("---------------------------------")

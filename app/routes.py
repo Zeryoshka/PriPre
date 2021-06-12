@@ -79,7 +79,7 @@ def plot_past_view():
         dates_lazy_pred, values_lazy_pred = lazy_prediction_manager.give_data(ticket)
         fig.add_trace(
             go.Scatter(
-                x=dates_lazy_pred, y=values_lazy_pred, name="Predicted value"
+                x=dates_lazy_pred, y=values_lazy_pred, name="Lazy Predicted value"
             )
         )
     fig.update_layout(
