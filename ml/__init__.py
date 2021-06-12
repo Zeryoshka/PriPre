@@ -21,9 +21,16 @@ class Models:
         param: models - dict
         """
         self._models = MODELS  # Dict of models
-        self.names = list(
+        self._names = list(
             MODELS.keys()
         )  # List of models's names (generate automaticly from MODELS)
+
+    @property
+    def names(self):
+        """
+        Property with list of models names
+        """
+        return self._names
 
     def __getitem__(self, key):
         """
