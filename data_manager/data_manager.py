@@ -47,7 +47,10 @@ class DataManager:
         with open(self._path_to_data + ticket + ".csv", newline="") as csvfile:
             content = pd.read_csv(csvfile)
             values = content.loc[
-                (content["date"] >= start_date) & (content["date"] <= end_date)
+                (content["begin"] >= start_date) & (content["begin"] <= end_date)
             ]
-            x_axis, y_axis = list(values["date"]), list(values["close_value"])
+            x_axis, y_axis = values["begin"], values["close"]
             return x_axis, y_axis
+    
+    # @staticmethod
+    # def get_data_csv()

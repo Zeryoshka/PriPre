@@ -27,7 +27,7 @@ def form_data() -> None:
             )
             whole_frame = pd.DataFrame(data)
             date, close = whole_frame["begin"], whole_frame["close"]
-            attr = {"date": date, "close_value": close}
+            attr = {"begin": date, "close": close}
             whole_frame = pd.DataFrame(attr)
             if not os.path.exists(DATA_PATH):
                 os.mkdir(DATA_PATH)
