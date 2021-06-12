@@ -2,9 +2,12 @@
 This file implements script
 Which loads data from apimoex
 """
+from ml.it_is_alive.config import EPHOS_FIT
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ["CUDA_VISIBLE_DEVICES"]= '-1' 
 
-from pandas.core import frame
-from data_manager import DataManager, Data_Manager
+from data_manager import DataManager
 import data_manager
 from ml import Models
 import pandas as pd
@@ -15,11 +18,11 @@ def slice_data(df, train_len=5000):
     """
     Method for slice df
     """
-    new_df = df.iloc.copy(deep=True)
+    new_df = df.copy(deep=True)
     train = new_df.iloc[:train_len]
     train.index = range(train_len)
     test = new_df.iloc[train_len:]
-    test.index = len(test)
+    test.index = range(len(test))
     return train, test
 
 
@@ -36,18 +39,16 @@ if __name__ == "__main__":
         dates, values = data_manager.give_data(ticket)
         data = pd.DataFrame({'begin' : dates.values, 'close' : values.values})
         train, test = slice_data(data)
-        for model in models:
-            model.compile_model()
-            model.fit(train)
-            print("""
-                ---------------------------------
-                Learning finished
-                ---------------------------------
-            """)
-            test_prediction = model.predict(train['close'][-PRICES_COUNT:], test['close'])
-            print("""
-                ---------------------------------
-                Prediction finished
-                ---------------------------------
-            """)
-            #Дописать сохранение
+        model = models['It is alive']
+        print(model)
+        model.compile_model()
+        model.fit(train)
+        print("---------------------------------")
+        print(f"Learning finished with ticket {ticket}")
+        print("---------------------------------")
+        test_prediction = model.predict(train['close'][-PRICES_COUNT:], test['begin'])
+        print("---------------------------------")
+        print(f"Prediction finished with ticket {ticket}")
+        print("---------------------------------")
+        print(test_prediction)
+        #Дописать сохранение
