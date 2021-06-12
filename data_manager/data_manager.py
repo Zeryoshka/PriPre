@@ -41,12 +41,12 @@ class DataManager:
                     os.mkdir(path)
                 whole_frame.to_csv(path + security + ".csv")
 
-    def __init__(self) -> None:
+    def __init__(self, path=DATA_PATH) -> None:
         """
         Constructor for Data_manager object
         param: DATA_PATH - str
         """
-        self._path_to_data = DATA_PATH
+        self._path_to_data = path
         self._ticket_list = list(map(lambda x: x.split(".")[0], os.listdir(DATA_PATH)))
         self.start_date = START_DATE
         self.end_date = END_DATE

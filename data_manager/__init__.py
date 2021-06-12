@@ -10,5 +10,6 @@ DM.py contains Data_manager class, which used to:
 """
 
 from .data_manager import DataManager
+from .config import PREDICTION_PATH
 
 Data_Manager = DataManager()

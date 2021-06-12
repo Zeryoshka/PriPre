@@ -17,6 +17,7 @@ from flask import jsonify
 from app.app import app
 from app.app import models
 from app.app import data_manager
+from app.app import prediction_manager
 
 
 def validate_data(date_text):
@@ -66,6 +67,13 @@ def plot_past_view():
     fig.add_trace(
         go.Scatter(
             x=dates, y=values, name="Real value"
+        )
+    )
+    if 'It is alive' in model_list:
+        dates_pred, values_pred = prediction_manager.give_data(ticket)
+        fig.add_trace(
+        go.Scatter(
+            x=dates_pred, y=values_pred, name="Predicted value"
         )
     )
     fig.update_layout(
