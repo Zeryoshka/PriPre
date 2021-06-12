@@ -72,10 +72,10 @@ def plot_past_view():
     if 'It is alive' in model_list:
         dates_pred, values_pred = prediction_manager.give_data(ticket)
         fig.add_trace(
-        go.Scatter(
-            x=dates_pred, y=values_pred, name="Predicted value"
+            go.Scatter(
+                x=dates_pred, y=values_pred, name="Predicted value"
+            )
         )
-    )
     fig.update_layout(
         title=go.layout.Title(text=f"PriPre {ticket} ticket graph"),
         yaxis_title="Close value",

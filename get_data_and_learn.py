@@ -13,6 +13,7 @@ from ml import Models
 import pandas as pd
 
 PRICES_COUNT = 100
+PATH = 'app/predict_data/'
 
 def slice_data(df, train_len=5000):
     """
@@ -51,4 +52,6 @@ if __name__ == "__main__":
         print(f"Prediction finished with ticket {ticket}")
         print("---------------------------------")
         print(test_prediction)
-        #Дописать сохранение
+        if not os.path.exists(PATH):
+            os.mkdir(PATH)
+        test_prediction.to_csv(PATH + ticket + ".csv")
