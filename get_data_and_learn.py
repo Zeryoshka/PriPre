@@ -14,7 +14,7 @@ import pandas as pd
 PRICES_COUNT = 100
 PATH = 'app/predict_data/'
 
-def slice_data(df, train_len=5000):
+def slice_data(df, train_len=50000):
     """
     Method for slice df
     """
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         model = models['It is alive']
         print(model)
         model.compile_model()
-        model.fit(train,)
+        model.fit(train)
         print("---------------------------------")
         print(f"Learning finished with ticket {ticket}")
         print("---------------------------------")
