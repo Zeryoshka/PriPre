@@ -12,11 +12,13 @@ import plotly.graph_objects as go
 
 from flask import render_template
 from flask import request
+from flask import jsonify
 
 from app.app import app
 from app.app import models
 from app.app import data_manager
-
+from app.app import prediction_manager
+from app.app import lazy_prediction_manager
 
 def validate_data(date_text):
     """
@@ -64,9 +66,22 @@ def plot_past_view():
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=dates, x0=dates[0], y=values, y0=values[0], name="Real value"
+            x=dates, y=values, name="Real value"
         )
     )
+    if 'It is alive' in model_list:
+        dates_pred, values_pred = prediction_manager.give_data(ticket)
+        fig.add_trace(
+            go.Scatter(
+                x=dates_pred, y=values_pred, name="Predicted value"
+            )
+        )
+        dates_lazy_pred, values_lazy_pred = lazy_prediction_manager.give_data(ticket)
+        fig.add_trace(
+            go.Scatter(
+                x=dates_lazy_pred, y=values_lazy_pred, name="Lazy Predicted value"
+            )
+        )
     fig.update_layout(
         title=go.layout.Title(text=f"PriPre {ticket} ticket graph"),
         yaxis_title="Close value",
@@ -107,7 +122,7 @@ def count_stats():
     JSON with needed values of given ticket and period
     """
 
-    ticket = request.args["ticket"]  # params["ticket"] Ticket name from client
+    ticket = request.args["ticket"]
     if ticket not in data_manager.ticket_list:
         return 400
     period_start, period_end = (
@@ -122,7 +137,7 @@ def count_stats():
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=dates, x0=dates[0], y=values, y0=values[0], name="Real value"
+            x=list(dates), y=list(values), name="Real value"
         )
     )
     fig.update_layout(
@@ -133,7 +148,7 @@ def count_stats():
         legend_title_text="Tickets",
         font=dict(family="Courier New, monospace", size=18, color="Black"),
     )
-    values = pd.Series(data=values, index=dates)
+    values = pd.Series(data=values.values, index=dates)
     answer = {
         "chart": fig.to_dict(),
         "stats": {
@@ -141,7 +156,7 @@ def count_stats():
             "avg": values.mean(),
             "median": values.median(),
             "mode": values.mode()[0],
-            "variants": values.var(),
-        },
+            "variants": values.var()
+        }
     }
-    return answer
+    return json.dumps(answer)

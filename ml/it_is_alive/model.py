@@ -9,11 +9,16 @@ from .config import EPHOS_FIT
 from .utils import reshaper
 from .utils import normalise
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ["CUDA_VISIBLE_DEVICES"]= '-1' 
+
 import json
 import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
+
 
 class It_is_alive:
     """
@@ -116,15 +121,14 @@ class It_is_alive:
         """
         self.model = keras.Sequential([
             keras.layers.Flatten(input_shape=(FEATURES_COUNT,)),
-            keras.layers.Dense(64, activation=tf.nn.silu),
-            keras.layers.Dense(26, activation=tf.nn.softplus),
-            keras.layers.Dense(24, activation=tf.nn.silu),
-            keras.layers.Dense(40, activation=tf.nn.silu),
-            keras.layers.Dense(30, activation=tf.nn.relu),
-            keras.layers.Dense(30, activation=tf.nn.softplus),
-            keras.layers.Dense(30, activation=tf.nn.relu),
-            keras.layers.Dense(64, activation=tf.nn.silu),
-            keras.layers.Dense(1, activation=tf.nn.relu),
+            keras.layers.Dense(128, activation=tf.nn.softplus),
+            keras.layers.Dense(128, activation=tf.nn.silu),
+            keras.layers.Dense(64, activation=tf.nn.softplus),
+            keras.layers.Dense(32, activation=tf.nn.softplus),
+            keras.layers.Dense(16, activation=tf.nn.silu),
+            keras.layers.Dense(8, activation=tf.nn.softplus),
+            keras.layers.Dense(4, activation=tf.nn.silu),
+            keras.layers.Dense(1, activation=tf.nn.softplus),
         ])
         self.model.compile(optimizer=tf.keras.optimizers.RMSprop(learning_rate=0.001, rho=0.9),
             loss='mse', 

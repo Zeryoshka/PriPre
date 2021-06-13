@@ -1,8 +1,0 @@
-app/__init__.py:5:1: E402 module level import not at top of file
-app/__init__.py:5:1: F401 'data_manager.DataManager' imported but unused
-app/__init__.py:6:1: E402 module level import not at top of file
-app/__init__.py:6:1: F401 'app.ml.models' imported but unused
-app/__init__.py:7:1: E402 module level import not at top of file
-app/__init__.py:7:1: F401 'app.routes' imported but unused
-app/__init__.py:7:23: W292 no newline at end of file
-data_manager/get_data.py:1:1: F401 'genericpath.exists' imported but unused

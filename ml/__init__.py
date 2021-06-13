@@ -6,7 +6,7 @@ from .it_is_alive import It_is_alive
 
 
 MODELS = {
-    "It is alive": It_is_alive
+    "It is alive": It_is_alive()
 }
 
 
@@ -15,15 +15,22 @@ class Models:
     Class for describing all models
     """
 
-    def __init__(self, MODELS):
+    def __init__(self, MODELS=MODELS):
         """
         Constructor of models object
         param: models - dict
         """
         self._models = MODELS  # Dict of models
-        self.names = list(
+        self._names = list(
             MODELS.keys()
         )  # List of models's names (generate automaticly from MODELS)
+
+    @property
+    def names(self):
+        """
+        Property with list of models names
+        """
+        return self._names
 
     def __getitem__(self, key):
         """
