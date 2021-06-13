@@ -12,7 +12,6 @@ import plotly.graph_objects as go
 
 from flask import render_template
 from flask import request
-from flask import jsonify
 
 from app.app import app
 from app.app import models
