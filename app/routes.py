@@ -19,7 +19,7 @@ from app.app import data_manager
 from app.app import prediction_manager
 from app.app import lazy_prediction_manager
 
-def validate_data(date_text):
+def validate_data(date_text : str) -> bool:
     """
     Function used for validating data
     In get_stats function
@@ -96,7 +96,7 @@ def plot_past_view():
     )
 
 
-@app.route("/stats/", methods=["GET"])
+@app.route("/stats/")
 def display_stats():
     """
     Returns html page with stats selection
