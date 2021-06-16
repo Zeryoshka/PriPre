@@ -19,7 +19,13 @@ class DataManager:
     """
 
     @staticmethod
-    def update_data(ticket_list=SECURITY_LIST, start_date=START_DATE, end_date=END_DATE, interval=INTERVAL, path=DATA_PATH) -> None:
+    def update_data(
+        ticket_list=SECURITY_LIST,
+        start_date=START_DATE,
+        end_date=END_DATE,
+        interval=INTERVAL,
+        path=DATA_PATH,
+    ) -> None:
         """
         Used for updating data as a class method
         Works same as get_data.py script
@@ -47,7 +53,9 @@ class DataManager:
         param: DATA_PATH - str
         """
         self._path_to_data = path
-        self._ticket_list = list(map(lambda x: x.split(".")[0], os.listdir(DATA_PATH)))
+        self._ticket_list = list(
+            map(lambda x: x.split(".")[0], os.listdir(DATA_PATH))
+        )
         self.start_date = START_DATE
         self.end_date = END_DATE
 
@@ -59,7 +67,9 @@ class DataManager:
         """
         return self._ticket_list
 
-    def give_data(self, ticket: str, start_date=START_DATE, end_date=END_DATE) -> tuple:
+    def give_data(
+        self, ticket: str, start_date=START_DATE, end_date=END_DATE
+    ) -> tuple:
         """
         Opens up csv file and reads it to two lists
         x_axis : list of datetime.datetime objects
@@ -68,7 +78,8 @@ class DataManager:
         with open(self._path_to_data + ticket + ".csv", newline="") as csvfile:
             content = pd.read_csv(csvfile)
             values = content.loc[
-                (content["begin"] >= start_date) & (content["begin"] <= end_date)
+                (content["begin"] >= start_date)
+                & (content["begin"] <= end_date)
             ]
             x_axis, y_axis = values["begin"], values["close"]
             return x_axis, y_axis

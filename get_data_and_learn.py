@@ -2,28 +2,28 @@
 This file implements script
 Which loads data from apimoex
 """
-from ml.it_is_alive.config import EPHOS_FIT
 import os
+import pandas as pd
+
+from ml import Models
 
 from data_manager import DataManager
 from data_manager import LAZY_PREDICTION_PATH
-import data_manager
-from ml import Models
-import pandas as pd
+
 
 PRICES_COUNT = 100
 PATH = 'app/predict_data/'
 
-def slice_data(df, train_len=50000):
+def slice_data(data_f, train_len=50000):
     """
     Method for slice df
     """
-    new_df = df.copy(deep=True)
-    train = new_df.iloc[:train_len]
-    train.index = range(train_len)
-    test = new_df.iloc[train_len:]
-    test.index = range(len(test))
-    return train, test
+    new_data_f = data_f.copy(deep=True)
+    train_data = new_data_f.iloc[:train_len]
+    train_data.index = range(train_len)
+    test_data = new_data_f.iloc[train_len:]
+    test_data.index = range(len(test_data))
+    return train_data, test_data
 
 
 if __name__ == "__main__":
