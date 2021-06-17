@@ -1,4 +1,4 @@
-Plotly.plot('chart', {}, {})
+Plotly.plot('chart', {}, {});
 
 function create_data_obj() {
     let models = []
@@ -28,4 +28,8 @@ $('.form__submit').click(function (){
     })
 
     return false
+});
+
+$(window).resize(function(){
+    location = location
 });

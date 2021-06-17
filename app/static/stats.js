@@ -31,3 +31,7 @@ $('#form').on('submit', function(e){
     })
     return false
 });
+
+$(window).resize(function(){
+    Plotly.plot('chart', {}, {})
+});
